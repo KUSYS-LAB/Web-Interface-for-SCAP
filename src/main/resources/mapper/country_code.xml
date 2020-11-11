@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ac.kr.korea.cdm.mapper.CountryCodeMapper">
+    <resultMap type="ac.kr.korea.cdm.dto.CountryCodeDto" id="countryCodeDtoResult">
+        <result column="CODE3" property="code3"/>
+        <result column="CODE2" property="code2"/>
+        <result column="country" property="country"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="countryCodeDtoResult">
+        SELECT *
+        FROM country_code
+        ORDER BY country ASC;
+    </select>
+</mapper>

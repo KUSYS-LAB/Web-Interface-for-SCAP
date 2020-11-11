@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ac.kr.korea.cdm.mapper.ServiceServerMapper">
+    <resultMap id="serviceServerResult" type="ac.kr.korea.cdm.dto.ServiceServerDto">
+        <result column="id" property="id"/>
+        <result column="ip_addr" property="ipAddr"/>
+        <result column="institute" property="institute"/>
+    </resultMap>
+
+    <select id="getAllServiceServers" resultMap="serviceServerResult">
+        SELECT
+            id,
+            ip_addr,
+            institute
+        FROM
+            service_server
+        ;
+    </select>
+
+    <select id="getOne" resultMap="serviceServerResult" parameterType="int">
+        SELECT
+            id,
+            ip_addr,
+            institute
+        FROM
+            service_server
+        WHERE
+            id = #{id}
+        ;
+    </select>
+</mapper>

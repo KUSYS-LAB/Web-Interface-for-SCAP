@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ac.kr.korea.cdm.mapper.ProjectMapper">
+    <resultMap type="ac.kr.korea.cdm.dto.ProjectDto" id="projectDtoResult">
+        <result column="project_id" property="projectId"/>
+        <result column="member_id" property="memberId"/>
+        <result column="description" property="description"/>
+    </resultMap>
+
+    <parameterMap type="ac.kr.korea.cdm.dto.ProjectDto" id="projectDtoParam">
+        <parameter property="projectId"/>
+        <parameter property="memberId"/>
+        <parameter property="description"/>
+    </parameterMap>
+
+    <select id="getOne" parameterMap="projectDtoParam" resultMap="projectDtoResult">
+        SELECT
+            project_id,
+            member_id,
+            description
+        FROM cdm_project
+        WHERE member_id=#{memberId} AND description=#{description}
+        LIMIT 1;
+    </select>
+
+    <select id="getAll" resultMap="projectDtoResult" parameterMap="projectDtoParam">
+        SELECT
+            project_id,
+            member_id,
+            description
+        FROM cdm_project
+        WHERE member_id = #{memberId}
+        ORDER BY project_id;
+    </select>
+
+    <select id="selectOne" resultMap="projectDtoResult" parameterMap="projectDtoParam">
+        SELECT
+            project_id,
+            member_id,
+            description
+        FROM cdm_project
+        WHERE project_id = #{projectId};
+    </select>
+
+    <insert id="insertOne" parameterMap="projectDtoParam">
+        INSERT InTO cdm_project
+        ( member_id, description)
+        VALUES
+        (#{memberId}, #{description});
+    </insert>
+
+    <delete id="delete" parameterMap="projectDtoParam">
+        DELETE FROM cdm_project
+        WHERE project_id=#{projectId};
+    </delete>
+</mapper>

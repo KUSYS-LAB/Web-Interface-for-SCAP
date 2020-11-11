@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ac.kr.korea.cdm.mapper.CdmMemberMapper">
+    <resultMap type="ac.kr.korea.cdm.dto.CdmMemberDto" id="cdmMemberDtoResult">
+        <result column="member_id" property="memberId"/>
+    </resultMap>
+
+    <parameterMap type="ac.kr.korea.cdm.dto.CdmMemberDto" id="cdmMemberDtoParam">
+        <parameter property="memberId"/>
+    </parameterMap>
+
+    <select id="getOne" parameterMap="cdmMemberDtoParam" resultMap="cdmMemberDtoResult">
+        SELECT *
+        FROM cdm_member
+        WHERE member_id=#{memberId}
+        LIMIT 1;
+    </select>
+
+    <select id="getAll" resultMap="cdmMemberDtoResult">
+        SELECT *
+        FROM cdm_member
+        ORDER BY member_id;
+    </select>
+
+    <insert id="insertOne" parameterMap="cdmMemberDtoParam">
+        INSERT INTO cdm_member
+        (member_id)
+        VALUES
+        (#{memberId});
+    </insert>
+</mapper>

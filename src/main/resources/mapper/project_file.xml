@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ac.kr.korea.cdm.mapper.ProjectFileMapper">
+
+    <resultMap type="ac.kr.korea.cdm.dto.ProjectFileDto" id="projectFileDtoResult">
+        <result column="project_id" property="projectId"/>
+        <result column="file_id" property="fileId"/>
+        <result column="description" property="description"/>
+        <result column="path" property="path"/>
+        <result column="file_name" property="fileName"/>
+        <result column="request_time" property="requestTime"/>
+        <result column="path_output" property="pathOutput"/>
+    </resultMap>
+
+    <parameterMap type="ac.kr.korea.cdm.dto.ProjectFileDto" id="projectFileDtoParam">
+        <parameter property="projectId"/>
+        <parameter property="fileId"/>
+        <parameter property="description"/>
+        <parameter property="path"/>
+        <parameter property="fileName"/>
+        <parameter property="requestTime"/>
+        <parameter property="pathOutput"/>
+    </parameterMap>
+
+    <select id="getOne" parameterMap="projectFileDtoParam" resultMap="projectFileDtoResult">
+        SELECT
+            project_id,
+            file_id,
+            description,
+            path,
+            file_name,
+            request_time,
+            path_output
+        FROM cdm_project_file
+        WHERE
+            project_id=#{projectId}
+            AND description=#{description}
+            AND path=#{path}
+            AND file_name=#{fileName}
+        LIMIT 1;
+    </select>
+
+    <select id="getOneById" parameterMap="projectFileDtoParam" resultMap="projectFileDtoResult">
+        SELECT
+            project_id,
+            file_id,
+            description,
+            path,
+            file_name,
+            request_time,
+            path_output
+        FROM
+            cdm_project_file
+        WHERE
+            project_id=#{projectId}
+            AND file_id = #{fileId}
+        LIMIT 1;
+    </select>
+
+    <select id="getAll" resultMap="projectFileDtoResult" parameterMap="projectFileDtoParam">
+        SELECT
+            project_id,
+            file_id,
+            description,
+            path,
+            file_name,
+            request_time,
+            path_output
+        FROM cdm_project_file
+        WHERE
+            project_id = #{projectId}
+        ORDER BY file_id;
+    </select>
+
+    <select id="selectOne" resultMap="projectFileDtoResult" parameterMap="projectFileDtoParam">
+        SELECT
+            project_id,
+            file_id,
+            description,
+            path,
+            file_name,
+            request_time,
+            path_output
+        FROM cdm_project_file
+        WHERE
+            file_id = #{fileId};
+    </select>
+
+    <insert id="insertOne" parameterMap="projectFileDtoParam">
+        INSERT InTO cdm_project_file
+            ( project_id, path, description ,file_name)
+        VALUES
+          (#{projectId} ,#{path}, #{description} , #{fileName});
+    </insert>
+
+    <update id="updateRequestTime" parameterMap="projectFileDtoParam">
+        UPDATE cdm_project_file
+        SET
+            request_time = #{requestTime}
+        WHERE
+            project_id = #{projectId}
+            AND file_id=#{fileId}
+        ;
+    </update>
+
+    <update id="updatePathOutput" parameterMap="projectFileDtoParam">
+        UPDATE cdm_project_file
+        SET
+            path_output = #{pathOutput}
+        WHERE
+            project_id = #{projectId}
+            AND file_id = #{fileId}
+        ;
+    </update>
+
+    <delete id="delete" parameterMap="projectFileDtoParam">
+        DELETE FROM cdm_project_file
+        WHERE file_id=#{fileId};
+    </delete>
+</mapper>

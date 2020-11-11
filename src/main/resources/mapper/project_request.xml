@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ac.kr.korea.cdm.mapper.ProjectRequestMapper">
+
+    <resultMap type="ac.kr.korea.cdm.dto.ProjectRequestDto" id="projectRequestDtoResult">
+        <result column="project_id" property="projectId"/>
+        <result column="file_id" property="fileId"/>
+        <result column="request_time" property="requestTime"/>
+    </resultMap>
+
+    <resultMap type="ac.kr.korea.cdm.dto.ProjectRequestDto" id="projectRequestDtoResultMax">
+        <result column="project_id" property="projectId"/>
+        <result column="file_id" property="fileId"/>
+        <result column="Max(request_time)" property="requestTime"/>
+    </resultMap>
+
+    <parameterMap type="ac.kr.korea.cdm.dto.ProjectRequestDto" id="projectRequestDtoParam">
+        <parameter property="projectId"/>
+        <parameter property="fileId"/>
+        <parameter property="requestTime"/>
+    </parameterMap>
+
+
+    <select id="getAll" resultMap="projectRequestDtoResult" parameterMap="projectRequestDtoParam">
+        SELECT
+            project_id,
+            file_id,
+            request_time
+        FROM cdm_project_request
+        WHERE
+            project_id = #{projectId}
+            AND file_id = #{fileId}
+        ORDER BY file_id;
+    </select>
+
+    <select id="getMax" resultMap="projectRequestDtoResultMax" parameterMap="projectRequestDtoParam">
+        SELECT
+            project_id,
+            file_id,
+            Max(request_time)
+        FROM cdm_project_request
+        WHERE
+            project_id = #{projectId}
+            AND file_id = #{fileId};
+    </select>
+
+
+    <insert id="insertOne" parameterMap="projectRequestDtoParam">
+        INSERT InTO cdm_project_request
+            ( project_id, file_id, request_time)
+        VALUES
+            (#{projectId} ,#{fileId}, #{requestTime});
+    </insert>
+
+    <delete id="delete" parameterMap="projectRequestDtoParam">
+        DELETE FROM cdm_project_request
+        WHERE
+            project_id = #{projectId}
+            AND file_id = #{fileId}
+            AND request_time = #{requestTime};
+    </delete>
+</mapper>

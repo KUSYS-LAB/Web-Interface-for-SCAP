@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ac.kr.korea.cdm.mapper.MemberMapper">
+    <resultMap type="ac.kr.korea.cdm.dto.MemberDto" id="MemberDtoResult">
+        <result column="id" property="id"/>
+        <result column="password" property="password"/>
+        <result column="first_name_en" property="firstNameEn"/>
+        <result column="last_name_en" property="lastNameEn"/>
+        <result column="first_name_ko" property="firstNameKo"/>
+        <result column="last_name_ko" property="lastNameKo"/>
+        <result column="country_code" property="countryCode"/>
+        <result column="institute" property="institute"/>
+        <result column="type_code" property="typeCode"/>
+    </resultMap>
+
+    <select id="getOne" parameterType="ac.kr.korea.cdm.dto.MemberDto" resultMap="MemberDtoResult">
+        SELECT *
+        FROM member
+        WHERE id = #{id} AND password = #{password}
+        LIMIT 1;
+    </select>
+
+    <insert id="insertOne" parameterType="ac.kr.korea.cdm.dto.MemberDto">
+        INSERT
+        INTO member (id, password, first_name_en, last_name_en, first_name_ko, last_name_ko, country_code, institute,
+        type_code)
+        VALUES (#{id}, #{password}, #{firstNameEn}, #{lastNameEn}, #{firstNameKo}, #{lastNameKo}, #{countryCode},
+        #{institute}, #{typeCode})
+    </insert>
+</mapper>
